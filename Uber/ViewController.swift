@@ -11,6 +11,8 @@ import FirebaseAuth
 
 class ViewController: UIViewController {
     
+    var signUpMode = true
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
@@ -27,7 +29,21 @@ class ViewController: UIViewController {
     }
     
     @IBAction func bottomTapped(_ sender: UIButton) {
-        
+        if signUpMode {
+            topButton.setTitle("Log In", for: .normal)
+            bottomButton.setTitle("Switch to Sign Up", for: .normal)
+            riderLabel.isHidden = true
+            riderDriverSwitch.isHidden = true
+            driverLabel.isHidden = true
+            signUpMode = false
+        } else {
+            topButton.setTitle("Sign Up", for: .normal)
+            bottomButton.setTitle("Switch to Log In", for: .normal)
+            riderLabel.isHidden = false
+            riderDriverSwitch.isHidden = false
+            driverLabel.isHidden = false
+            signUpMode = true
+        }
     }
     
     override func viewDidLoad() {
