@@ -38,6 +38,8 @@ class ViewController: UIViewController {
                                     self.displayAlert(title: "Error", message: error!.localizedDescription)
                             } else {
                                 print("Sign Up Success")
+                                // When log in is successful, go to Navigation Controller for the rider
+                                self.performSegue(withIdentifier: "riderSegue", sender: nil)
                             }
                         }
                     } else {
@@ -48,6 +50,8 @@ class ViewController: UIViewController {
                                 self.displayAlert(title: "Error", message: error!.localizedDescription)
                             } else {
                                 print("Log In Success")
+                                // When log in is successful, go to Navigation Controller for the rider
+                                self.performSegue(withIdentifier: "riderSegue", sender: nil)
                             }
                         }
                     }
@@ -57,19 +61,7 @@ class ViewController: UIViewController {
             
         }
     }
-    
-    // our custom method for displaying alerts
-    func displayAlert(title: String, message: String) {
         
-        // Creates the Alert Controller
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        // The action button to alertController
-        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        
-        // presents the AlertController we just made
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
     @IBAction func bottomTapped(_ sender: UIButton) {
         if signUpMode {
             topButton.setTitle("Log In", for: .normal)
@@ -86,6 +78,18 @@ class ViewController: UIViewController {
             driverLabel.isHidden = false
             signUpMode = true
         }
+    }
+    
+    // our custom method for displaying alerts
+    func displayAlert(title: String, message: String) {
+        
+        // Creates the Alert Controller
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        // The action button to alertController
+        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        
+        // presents the AlertController we just made
+        self.present(alertController, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {

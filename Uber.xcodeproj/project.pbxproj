@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		47F29905F7F11170007BB6E8 /* Pods_Uber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A549AF6DCA6DE8B9E76E4CE9 /* Pods_Uber.framework */; };
+		AE79D8E52114A340008CF557 /* RiderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE79D8E42114A340008CF557 /* RiderViewController.swift */; };
 		AEC5594D2113D2B800001382 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC5594C2113D2B800001382 /* AppDelegate.swift */; };
 		AEC5594F2113D2B800001382 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC5594E2113D2B800001382 /* ViewController.swift */; };
 		AEC559522113D2B800001382 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEC559502113D2B800001382 /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		30AB61311078A56A47A0D34C /* Pods-Uber.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Uber.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Uber/Pods-Uber.debug.xcconfig"; sourceTree = "<group>"; };
 		A549AF6DCA6DE8B9E76E4CE9 /* Pods_Uber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Uber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE79D8E42114A340008CF557 /* RiderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiderViewController.swift; sourceTree = "<group>"; };
 		AEC559492113D2B800001382 /* Uber.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Uber.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEC5594C2113D2B800001382 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AEC5594E2113D2B800001382 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			children = (
 				AEC5594C2113D2B800001382 /* AppDelegate.swift */,
 				AEC5594E2113D2B800001382 /* ViewController.swift */,
+				AE79D8E42114A340008CF557 /* RiderViewController.swift */,
 				AEC559502113D2B800001382 /* Main.storyboard */,
 				AEC559532113D2B900001382 /* Assets.xcassets */,
 				AEC559552113D2B900001382 /* LaunchScreen.storyboard */,
@@ -209,6 +212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEC5594F2113D2B800001382 /* ViewController.swift in Sources */,
+				AE79D8E52114A340008CF557 /* RiderViewController.swift in Sources */,
 				AEC5594D2113D2B800001382 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
