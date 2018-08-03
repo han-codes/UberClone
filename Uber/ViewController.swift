@@ -25,7 +25,49 @@ class ViewController: UIViewController {
     @IBOutlet weak var bottomButton: UIButton!
     
     @IBAction func topTapped(_ sender: UIButton) {
+        if emailTextField.text == "" || passwordTextField.text == "" {
+            displayAlert(title: "Missing Information", message: "You must provide both a valid email and password")
+        } else {
+            if let email = emailTextField.text {
+                if let password = passwordTextField.text {
+                    if signUpMode {
+                        // SIGN UP AUTHENTICATION
+                        Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
+                            if error != nil {
+                                    // display error message
+                                    self.displayAlert(title: "Error", message: error!.localizedDescription)
+                            } else {
+                                print("Sign Up Success")
+                            }
+                        }
+                    } else {
+                        // LOG IN
+                        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+                            if error != nil {
+                                // display error message
+                                self.displayAlert(title: "Error", message: error!.localizedDescription)
+                            } else {
+                                print("Log In Success")
+                            }
+                        }
+                    }
+                }
+            }
+            
+            
+        }
+    }
+    
+    // our custom method for displaying alerts
+    func displayAlert(title: String, message: String) {
         
+        // Creates the Alert Controller
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        // The action button to alertController
+        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        
+        // presents the AlertController we just made
+        self.present(alertController, animated: true, completion: nil)
     }
     
     @IBAction func bottomTapped(_ sender: UIButton) {
@@ -50,12 +92,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
 }
 
