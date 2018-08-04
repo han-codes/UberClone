@@ -45,6 +45,9 @@ class ViewController: UIViewController {
                                     let req = Auth.auth().currentUser?.createProfileChangeRequest()
                                     req?.displayName = "Driver"
                                     req?.commitChanges(completion: nil)
+                                    
+                                    // log in to the driver view controller
+                                    self.performSegue(withIdentifier: "driverSegue", sender: nil)
                                 } else {
                                     // RIDER
                                     let req = Auth.auth().currentUser?.createProfileChangeRequest()
@@ -66,7 +69,7 @@ class ViewController: UIViewController {
                                 // if the user's displayName is...
                                 if user?.user.displayName == "Driver" {
                                     // DRIVER
-                                    print("Driver")
+                                    self.performSegue(withIdentifier: "driverSegue", sender: nil)
                                 } else {
                                     // RIDER
                                     // When log in is successful, go to Navigation Controller for the rider
