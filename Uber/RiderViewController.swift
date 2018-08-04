@@ -32,6 +32,18 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        
+        // if user is already signed in and has called an uber, which adds their data into our database
+        // if their info in our database, they have already requested an uber so we know to give a cancel option
+        if let email = Auth.auth().currentUser?.email {
+            // Remove the user's values since they cancelled their uber
+            Database.database().reference().child("RideRequests").queryOrdered(byChild: "email").queryEqual(toValue: email).observe(.childAdded) { (snapshot) in
+                //                snapshot.ref.removeValue()
+                self.uberHasBeenCalled = true
+                self.callAnUberButton.setTitle("Cancel Uber", for: .normal)
+                Database.database().reference().child("RideRequests").removeAllObservers()
+            }
+        }
     }
     
     // when location is updated
@@ -95,6 +107,10 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func logoutTapped(_ sender: UIBarButtonItem) {
+        // sign out of app
+        try? Auth.auth().signOut()
+        navigationController?.dismiss(animated: true, completion: nil)
+        
         
     }
     
