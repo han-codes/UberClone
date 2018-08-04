@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 
 class ViewController: UIViewController {
     
@@ -34,12 +35,25 @@ class ViewController: UIViewController {
                         // SIGN UP AUTHENTICATION
                         Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
                             if error != nil {
-                                    // display error message
-                                    self.displayAlert(title: "Error", message: error!.localizedDescription)
+                                // display error message
+                                self.displayAlert(title: "Error", message: error!.localizedDescription)
                             } else {
-                                print("Sign Up Success")
-                                // When log in is successful, go to Navigation Controller for the rider
-                                self.performSegue(withIdentifier: "riderSegue", sender: nil)
+                                
+                                // Sets the displayName for user, whether driver or rider
+                                if self.riderDriverSwitch.isOn {
+                                    // DRIVER
+                                    let req = Auth.auth().currentUser?.createProfileChangeRequest()
+                                    req?.displayName = "Driver"
+                                    req?.commitChanges(completion: nil)
+                                } else {
+                                    // RIDER
+                                    let req = Auth.auth().currentUser?.createProfileChangeRequest()
+                                    req?.displayName = "Rider"
+                                    req?.commitChanges(completion: nil)
+                                    
+                                    // When log in is successful, go to Navigation Controller for the rider
+                                    self.performSegue(withIdentifier: "riderSegue", sender: nil)
+                                }                                
                             }
                         }
                     } else {
@@ -49,9 +63,15 @@ class ViewController: UIViewController {
                                 // display error message
                                 self.displayAlert(title: "Error", message: error!.localizedDescription)
                             } else {
-                                print("Log In Success")
-                                // When log in is successful, go to Navigation Controller for the rider
-                                self.performSegue(withIdentifier: "riderSegue", sender: nil)
+                                // if the user's displayName is...
+                                if user?.user.displayName == "Driver" {
+                                    // DRIVER
+                                    print("Driver")
+                                } else {
+                                    // RIDER
+                                    // When log in is successful, go to Navigation Controller for the rider
+                                    self.performSegue(withIdentifier: "riderSegue", sender: nil)
+                                }
                             }
                         }
                     }
@@ -61,7 +81,7 @@ class ViewController: UIViewController {
             
         }
     }
-        
+    
     @IBAction func bottomTapped(_ sender: UIButton) {
         if signUpMode {
             topButton.setTitle("Log In", for: .normal)
