@@ -37,7 +37,7 @@ class DriverTableViewController: UITableViewController, CLLocationManagerDelegat
             self.tableView.reloadData()
         }
         
-        // Reloads the driver table view every 3 seconds. So it will keep updating the distance from driver and rider 
+        // Reloads the driver table view every 3 seconds. So it will keep updating  the distance from driver and rider
         Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { (timer) in
             self.tableView.reloadData()
         }
@@ -93,5 +93,10 @@ class DriverTableViewController: UITableViewController, CLLocationManagerDelegat
         }
         
         return cell
+    }
+    
+    // When driver selects a cell, it'll go to the AcceptRequest View Controller
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "acceptSegue", sender: nil )
     }
 }
