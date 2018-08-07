@@ -219,6 +219,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ZS-cw-nhC">
                                 <rect key="frame" x="132.5" y="437" width="109" height="30"/>
                                 <state key="normal" title="Accept Request"/>
+                                <connections>
+                                    <action selector="acceptTapped:" destination="itM-NI-A0u" eventType="touchUpInside" id="skM-dT-2tt"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -231,6 +234,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Dsi-Z6-Rb1"/>
                     </view>
+                    <connections>
+                        <outlet property="map" destination="kTz-9g-64K" id="4zt-jA-Hjk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cuu-Bd-mBu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

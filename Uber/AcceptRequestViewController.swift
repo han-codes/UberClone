@@ -7,29 +7,36 @@
 //
 
 import UIKit
+import MapKit
+import FirebaseDatabase
 
+// Goal: Have rider request on the map, let driver select the ride they want to accept, then launch Apple Maps
 class AcceptRequestViewController: UIViewController {
 
+    @IBOutlet weak var map: MKMapView!
+    
+    var requestLocation = CLLocationCoordinate2D()
+    var requestEmail = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+     
+        // set a region
+        let region = MKCoordinateRegion(center: requestLocation, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        map.setRegion(region, animated: false )
+        
+        // make an annotation
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = requestLocation
+        annotation.title = requestEmail
+        // add annotation to map
+        map.addAnnotation(annotation)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    @IBAction func acceptTapped(_ sender: UIButton) {
+        // Update the ride request
+        
+        // Give directions
     }
-    */
-
 }
