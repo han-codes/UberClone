@@ -99,7 +99,7 @@ class DriverTableViewController: UITableViewController, CLLocationManagerDelegat
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // gets the snapshot for the specific row
         let snapshot = rideRequests[indexPath.row]
-        performSegue(withIdentifier: "acceptSegue", sender: nil )
+        performSegue(withIdentifier: "acceptSegue", sender: snapshot )
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -115,6 +115,7 @@ class DriverTableViewController: UITableViewController, CLLocationManagerDelegat
                                 acceptVC.requestEmail = email
                                 let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
                                 acceptVC.requestLocation = location
+                                acceptVC.driverLocation = driverLocation
                             }
                         }
                     }
