@@ -19,8 +19,6 @@ class DriverTableViewController: UITableViewController, CLLocationManagerDelegat
     var locationManager = CLLocationManager()
     var driverLocation = CLLocationCoordinate2D()   // stores the driver's location
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,10 +29,21 @@ class DriverTableViewController: UITableViewController, CLLocationManagerDelegat
         locationManager.startUpdatingLocation()
         
         Database.database().reference().child("RideRequests").observe(.childAdded) { (snapshot) in
-            // add the snapshot to our array that holds all of them
-            self.rideRequests.append(snapshot)
-            // refresh every time we add something new.
-            self.tableView.reloadData()
+            // puts snapshot into a dictionary
+            if let rideRequestDictionary = snapshot.value as? [String:AnyObject] {
+                // checks to see if there's a driverLat value inside of the snapshot
+                // if there is, that means a driver has requested that rider already, since it has the driver's latitude
+                if let driverLat = rideRequestDictionary["driverLat"] as? Double {
+                    
+                } else {    // if there isn't a driverLat value for the rider
+                    // add the snapshot to our array that holds all of them
+                    self.rideRequests.append(snapshot)
+                    // refresh every time we add something new.
+                    self.tableView.reloadData()
+                    
+                }
+            }
+            
         }
         
         // Reloads the driver table view every 3 seconds. So it will keep updating  the distance from driver and rider
