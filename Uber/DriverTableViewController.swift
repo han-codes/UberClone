@@ -77,7 +77,7 @@ class DriverTableViewController: UITableViewController, CLLocationManagerDelegat
                         let driverCLLocation = CLLocation(latitude: driverLocation.latitude, longitude: driverLocation.longitude)
                         let riderCLLocation = CLLocation(latitude: lat, longitude: lon)
                         // get the distance from driverCLLocation and riderCLLocation
-                        // it does the calculations for us.
+                        // it does the calculations for us. 
                         // Divide by 1000 to convert the number to kilometers
                         let distance = driverCLLocation.distance(from: riderCLLocation) / 1000
                         
@@ -97,6 +97,29 @@ class DriverTableViewController: UITableViewController, CLLocationManagerDelegat
     
     // When driver selects a cell, it'll go to the AcceptRequest View Controller
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // gets the snapshot for the specific row
+        let snapshot = rideRequests[indexPath.row]
         performSegue(withIdentifier: "acceptSegue", sender: nil )
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let acceptVC = segue.destination as? AcceptRequestViewController {
+            if let snapshot = sender as? DataSnapshot {
+                // gets the emails of the users in the database and displays the the cells
+                if let rideRequestDictionary = snapshot.value as? [String:AnyObject] {
+                    if let email = rideRequestDictionary["email"] as? String {
+                        // gets latitude and longitude from the database snapshot
+                        if let lat = rideRequestDictionary["lat"] as? Double {
+                            if let lon = rideRequestDictionary["lon"] as? Double {
+                                // set properties from our AcceptRequestViewController
+                                acceptVC.requestEmail = email
+                                let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+                                acceptVC.requestLocation = location
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
