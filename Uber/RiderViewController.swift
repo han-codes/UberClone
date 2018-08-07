@@ -91,7 +91,7 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate {
                 // dictionary will be passed into the RideRequests table
                 let rideRequestDictionary : [String:Any] = ["email":email, "lat":userLocation.latitude, "lon":userLocation.longitude]
                 
-                // the child RideRequests in our database, gets it's values set by let rideRequestDictionary
+                // the child RideRequests in our database, gets it's values set by rideRequestDictionary constant
                 // childByAutoId() will provide the random unique id
                 Database.database().reference().child("RideRequests").childByAutoId().setValue(rideRequestDictionary)
                 
@@ -101,9 +101,7 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate {
                 // change the text of the button to give user option to cancel the uber
                 callAnUberButton.setTitle("Cancel Uber", for: .normal)
             }
-        }
-        
-        
+        }                
     }
     
     @IBAction func logoutTapped(_ sender: UIBarButtonItem) {
