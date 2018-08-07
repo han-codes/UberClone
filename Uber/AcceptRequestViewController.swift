@@ -53,7 +53,7 @@ class AcceptRequestViewController: UIViewController {
                 if placemarks.count > 0 {
                     let placeMark = MKPlacemark(placemark: placemarks[0])
                     let mapItem = MKMapItem(placemark: placeMark)
-                    mapItem.name = requestEmail
+                    mapItem.name = self.requestEmail
                     
                     // saying it's in driving mode
                     let options = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
