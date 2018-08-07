@@ -44,5 +44,22 @@ class AcceptRequestViewController: UIViewController {
         }
         
         // Give directions
+        let requestCLLocation = CLLocation(latitude: requestLocation.latitude, longitude: requestLocation.longitude)
+        
+        // makes sure the location we request is valid
+        CLGeocoder().reverseGeocodeLocation(requestCLLocation) { (placemark, error) in
+            if let placemarks = placemark {
+                // if something is in the placemarks array
+                if placemarks.count > 0 {
+                    let placeMark = MKPlacemark(placemark: placemarks[0])
+                    let mapItem = MKMapItem(placemark: placeMark)
+                    mapItem.name = requestEmail
+                    
+                    // saying it's in driving mode
+                    let options = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
+                    mapItem.openInMaps(launchOptions: options)
+                }
+            }
+        }
     }
 }
