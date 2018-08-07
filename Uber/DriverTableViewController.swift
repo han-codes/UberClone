@@ -11,8 +11,8 @@ import FirebaseAuth
 import FirebaseDatabase
 import MapKit
 
-class DriverTableViewController: UITableViewController {
-
+class DriverTableViewController: UITableViewController, CLLocationManagerDelegate {
+    
     // hold the ride requests in DataSnapshot type
     // snapshot used in viewDidLoad is a DataSnapshot data type
     var rideRequests : [DataSnapshot] = []
@@ -24,14 +24,32 @@ class DriverTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set delegate to self, best accuracy, request authorization when location is in use, start to update the location
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
         Database.database().reference().child("RideRequests").observe(.childAdded) { (snapshot) in
             // add the snapshot to our array that holds all of them
             self.rideRequests.append(snapshot)
             // refresh every time we add something new.
             self.tableView.reloadData()
         }
+        
+        // Reloads the driver table view every 3 seconds. So it will keep updating the distance from driver and rider 
+        Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { (timer) in
+            self.tableView.reloadData()
+        }
     }
-   
+    
+    // when the driver's location updates, set the coordinates inside the driverLocation variable
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let coord = manager.location?.coordinate {
+            driverLocation = coord
+        }
+    }
+    
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -53,7 +71,24 @@ class DriverTableViewController: UITableViewController {
         // gets the emails of the users in the database and displays the the cells
         if let rideRequestDictionary = snapshot.value as? [String:AnyObject] {
             if let email = rideRequestDictionary["email"] as? String {
-                    cell.textLabel?.text = email
+                if let lat = rideRequestDictionary["lat"] as? Double {
+                    if let lon = rideRequestDictionary["lon"] as? Double {
+                        
+                        let driverCLLocation = CLLocation(latitude: driverLocation.latitude, longitude: driverLocation.longitude)
+                        let riderCLLocation = CLLocation(latitude: lat, longitude: lon)
+                        // get the distance from driverCLLocation and riderCLLocation
+                        // it does the calculations for us.
+                        // Divide by 1000 to convert the number to kilometers
+                        let distance = driverCLLocation.distance(from: riderCLLocation) / 1000
+                        
+                        // get the rounded value of distance and times 100 to get a decimal value
+                        let roundedDistance = round(distance * 100) / 100
+                        
+                        //
+                        cell.textLabel?.text = "\(email) - \(roundedDistance) km away"
+                    }
+                }
+                
             }
         }
         
