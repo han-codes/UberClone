@@ -16,6 +16,7 @@ class AcceptRequestViewController: UIViewController {
     @IBOutlet weak var map: MKMapView!
     
     var requestLocation = CLLocationCoordinate2D()
+    var driverLocation = CLLocationCoordinate2D()
     var requestEmail = ""
     
     override func viewDidLoad() {
@@ -36,6 +37,11 @@ class AcceptRequestViewController: UIViewController {
     
     @IBAction func acceptTapped(_ sender: UIButton) {
         // Update the ride request
+        // Querying for the right ride request
+        Database.database().reference().child("RideRequests").queryOrdered(byChild: "email").queryEqual(toValue: requestEmail).observe(.childAdded) { (snapshot) in
+            snapshot.ref.updateChildValues(["driverLat":self.driverLocation.latitude, "driverLon":self.driverLocation.longitude])
+            Database.database().reference().child("RideRequests").removeAllObservers()
+        }
         
         // Give directions
     }
